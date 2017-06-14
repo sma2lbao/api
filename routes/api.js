@@ -1,4 +1,5 @@
 var express = require('express');
+var multiparty = require('multiparty');
 var router = express.Router();
 
 var success = {
@@ -140,5 +141,14 @@ router.get('/forlife/tasklist', function(req, res, next) {
   ];
   res.send(data);
 });
+
+router.post('/upload/video', function (req, res, next) {
+  var form = new multiparty.Form();
+  form.parse(req, function (err, fields, files) {
+    // console.log(files.originalFilename);
+    console.log(files);
+  })
+  res.send(success);
+})
 
 module.exports = router;
