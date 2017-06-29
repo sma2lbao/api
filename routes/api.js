@@ -73,6 +73,18 @@ router.get('/forlife/task', function(req, res, next) {
       centerSubTitle: '讨论',
       rightText: '7pm-9pm'
     },
+    {
+      leftIcon: 'mouse',
+      centerTitle: '工作',
+      centerSubTitle: '会议',
+      rightText: '7pm-9pm'
+    },
+    {
+      leftIcon: 'food',
+      centerTitle: '吃饭',
+      centerSubTitle: '中餐',
+      rightText: '7pm-9pm'
+    },
   ];
   res.send(data);
 });

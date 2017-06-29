@@ -1,7 +1,10 @@
 var express = require('express');
 var multiparty = require('multiparty');
 var crypto = require('crypto');
-var url = require("url");
+var xml2js = require('xml2js');
+var builder = new xml2js.Builder();
+var parser = new xml2js.Parser();
+
 var router = express.Router();
 
 function sha1(str) {
@@ -46,5 +49,18 @@ var error = {
 router.get('/', function(req, res, next) {
   validate(req, res);
 });
-
+router.post('/msg', function (req, res, next) {
+  req.xml = '';
+  req.on('data', function (chunk) {
+    req.xml += chunk;
+  });
+  req.on('end', function () {
+    var msg = {};
+    parser.parseString(req.xml, function (err, result) {
+      msg = result;
+    })
+    console.log(msg);
+    res.send(success);
+  });
+});
 module.exports = router;
