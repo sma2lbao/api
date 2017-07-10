@@ -1,6 +1,7 @@
 var express = require('express');
 var multiparty = require('multiparty');
 var router = express.Router();
+var blog = require('./blog/index.js');
 
 var success = {
   code: 1,
@@ -19,6 +20,8 @@ router.get('/', function(req, res, next) {
   };
   res.send(data);
 });
+
+router.use('/blog', blog);
 
 router.get('/forlife/signin', function(req, res, next) {
   // console.log(req.body);
@@ -162,5 +165,6 @@ router.post('/upload/video', function (req, res, next) {
   })
   res.send(success);
 })
+
 
 module.exports = router;
