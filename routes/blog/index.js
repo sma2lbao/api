@@ -26,18 +26,15 @@ router.get('/heads', function (req, res, next) {
 })
 
 router.post('/article', function (req, res, next) {
-  console.log(JSON.parse);
   req.body.comt = JSON.stringify(req.body.comt)
   var articleComt = '{"comt": '+ req.body.comt +'}';
   file.writeFile(path.resolve(__dirname, '../article', typeList[req.body.index] + '/', req.body.title+ '_' + new Date().getTime() +'.json'), articleComt, function (err) {
     if(err) {
-      console.log(err);
       res.send({
         error: '保存失败'
       })
     }
     else {
-      console.log('save success');
       res.send({
         msg: '保存成功'
       })
@@ -70,7 +67,6 @@ router.get('/article', function (req, res, next) {
       title = title.replace('.json', '');
     }
   }
-  console.log(title, comt);
   if(title && comt) {
     res.send({
       title: title,
@@ -160,7 +156,11 @@ function getFilesByDir(dir) {
   let reFiles = [];
   if(file.existsSync(dir)){
     var dirfiles = file.readdirSync(dir);
-    reFiles = dirfiles;
+    for(let i = 0; i < dirfiles.length; i++) {
+      if(-1 === dirfiles[i].indexOf('DS_Store')) {
+        reFiles.push(dirfiles[i]);
+      }
+    }
   }
   return reFiles
 }
